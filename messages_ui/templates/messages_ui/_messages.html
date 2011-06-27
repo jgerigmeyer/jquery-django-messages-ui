@@ -2,13 +2,11 @@
 
 {% icanhaz "message" %}
 
-<aside id="messages">
-  <ul>
-    {% for message in messages %}
-    <li class="message{% if message.tags %} {{ message.tags }}{% endif %}">
-      <p>{{ message|safe }}</p>
-      <a href="#" class="close">dismiss this message</a>
-    </li>
-    {% endfor %}
-  </ul>
-</aside>
+<ul id="messages">
+  {% for message in messages %}
+  <li class="message{% if message.tags %} {{ message.tags }}{% endif %}">
+    <p>{{ message|safe }}</p>
+    <a href="#" class="close">dismiss this message</a>
+  </li>
+  {% endfor %}
+</ul>
