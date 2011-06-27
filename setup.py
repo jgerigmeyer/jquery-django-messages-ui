@@ -26,7 +26,7 @@ setup(
     long_description=long_description,
     author="Jonny Gerig Meyer",
     author_email="jonny@oddbird.net",
-    url="{url}",
+    url="https://github.com/jgerigmeyer/django-messages-ui/",
     packages=["messages_ui"],
     package_data={
         "messages_ui": [
