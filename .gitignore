@@ -1,0 +1,3 @@
+*.egg
+django_messages_ui*.egg-info
+dist/
