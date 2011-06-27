@@ -3,3 +3,7 @@ include CHANGES.rst
 include LICENSE.txt
 include README.rst
 include TODO.rst
+
+recursive-include messages_ui/static *.js
+recursive-include messages_ui/templates *.html
+recursive-include messages_ui/jstemplates *.html

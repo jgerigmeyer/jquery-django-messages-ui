@@ -31,6 +31,8 @@ setup(
     package_data={
         "messages_ui": [
             "static/messages_ui/*.*",
+            "templates/messages_ui/*.html",
+            "jstemplates/*.html"
             ]
         },
     classifiers=[
