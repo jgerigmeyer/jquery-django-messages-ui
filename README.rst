@@ -71,8 +71,9 @@ Ajax
 
 To enable automatic handling of messages from Ajax requests, add
 ``"messages_ui.middleware.AjaxMessagesMiddleware"`` to your
-``MIDDLEWARE_CLASSES`` setting, and pass ``handleAjax: true`` to the plugin
-initialization.
+``MIDDLEWARE_CLASSES`` setting (directly after
+``django.contrib.messages.middleware.MessageMiddleware``), and pass
+``handleAjax: true`` to the plugin initialization.
 
 .. warning::
 
