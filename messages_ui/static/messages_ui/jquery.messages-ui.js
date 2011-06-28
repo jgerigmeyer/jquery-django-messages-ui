@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.1.1
+ * jQuery Messages UI 0.1.2
  *
  * Copyright (c) 2011, Jonny Gerig Meyer
  * All rights reserved.
@@ -30,6 +30,23 @@
                 });
             });
         }
+        if (options.handleAjax)
+            $.ajaxSetup(
+                {
+                    dataType: "json",
+                    dataFilter: function(data, type) {
+                        if (type == "json") {
+                            var parsed = $.parseJSON(data),
+                            messages = $(parsed.messages);
+                            messages.each(function() {
+                                $(ich.message(this)).appendTo(messageList);
+                            });
+                            messageList.messages();
+                        }
+                        return data;
+                    }
+                }
+            );
     };
 
     /* Setup plugin defaults */
@@ -38,6 +55,7 @@
         transientMessage: '.success',   // Selector for messages that will disappear on mousedown, keydown
         closeLink: '.close',            // Selector for link that closes message
         transientDelay: 500,            // Delay before mousedown or keydown events trigger transient message fade (ms)
-        transientFadeSpeed: 3000        // Fade speed for transient messages (ms)
+        transientFadeSpeed: 3000,        // Fade speed for transient messages (ms)
+        handleAjax: false          // Enable automatic handling of messages in "messages" key of JSON AJAX response
     };
 })(jQuery);
