@@ -9,22 +9,27 @@ from django.contrib import messages
 
 class AjaxMessagesMiddleware(object):
     """
-    Middleware to handle messages for AJAX requests
+    Middleware to handle messages for AJAX requests.
 
-    If the AJAX response is already JSON, add a "messages" key to it (or append
-    to an existing "messages" key) a list of messages (each message is an
-    object with "level", "message", and "tags" keys). If an existing key
-    "no_messages" is present and True, messages will not be read or added.
+    If the AJAX response is already JSON, add a "messages" key to it (or
+    append to an existing "messages" key) a list of messages (each
+    message is an object with "level", "message", and "tags" keys). If
+    an existing key "no_messages" is present and True, messages will not
+    be read or added.
 
-    If the AJAX response is currently html, turn it into JSON and stuff the
-    HTML content into the "html" key, adding a "messages" key as well.
+    If the AJAX response is currently html, turn it into JSON and stuff
+    the HTML content into the "html" key, adding a "messages" key as
+    well.
 
-    If the AJAX response is neither json nor html, return it as-is (with no
-    messages attached, and without iterating over messages).
+    If the AJAX response is neither json nor html, return it as-is (with
+    no messages attached, and without iterating over messages).
+
+    If the AJAX response has a status code other than 200, it will not
+    be modified (and messages will not be read).
 
     """
     def process_response(self, request, response):
-        if request.is_ajax():
+        if request.is_ajax() and response.status_code == 200:
             content_type = response['content-type'].split(";")[0]
 
             if content_type == "application/json":
