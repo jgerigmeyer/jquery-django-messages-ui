@@ -64,8 +64,7 @@ explicitly provided.
 
 Adding a message in JS (requires `ICanHaz.js`_)::
 
-    $(ich.message({message: "Sample Message", tags: "info"}).appendTo(
-        $('#messages'));
+    $(ich.message({message: "Sample Message", tags: "info"})).appendTo($('#messages'));
 
 To override the default JS template, add a ``message.html`` file to a
 directory listed in your ``ICANHAZ_DIRS`` setting (a `django-icanhaz`_
