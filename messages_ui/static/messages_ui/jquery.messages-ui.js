@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.1.4
+ * jQuery Messages UI 0.1.6
  *
  * Copyright (c) 2011, Jonny Gerig Meyer
  * All rights reserved.
@@ -44,15 +44,22 @@
         }
         if (options.handleAjax) {
             $.ajaxSetup({
-                dataType: "json",
+                dataType: 'json',
                 dataFilter: function (data, type) {
-                    if (type === "json") {
-                        var parsed = $.parseJSON(data),
-                            messages = $(parsed.messages);
-                        messages.each(function () {
-                            $(ich.message(this)).appendTo(messageList);
-                        });
-                        messageList.messages();
+                    if (data && type === 'json') {
+                        var json;
+                        try {
+                            json = $.parseJSON(data);
+                        } catch (e) {
+                            json = false;
+                        }
+                        if (json && json.messages) {
+                            var messages = $(json.messages);
+                            messages.each(function () {
+                                $(ich.message(this)).appendTo(messageList);
+                            });
+                            messageList.messages();
+                        }
                     }
                     return data;
                 }
