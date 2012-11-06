@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.1.6
+ * jQuery Messages UI 0.1.7
  *
  * Copyright (c) 2011, Jonny Gerig Meyer
  * All rights reserved.
@@ -26,7 +26,7 @@
         if (options.closeLink) {
             messageList.find(options.closeLink).click(function () {
                 var thisMessage = $(this).closest(options.message);
-                thisMessage.fadeOut('fast', function () {
+                thisMessage.stop().fadeOut('fast', function () {
                     thisMessage.detach();
                 });
                 return false;

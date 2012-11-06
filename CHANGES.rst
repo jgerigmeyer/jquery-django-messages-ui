@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+0.1.7 (2012.11.06)
+------------------
+
+* JS stop transient-message fade on close-link click.
+
 0.1.6 (2012.10.05)
 ------------------
 
