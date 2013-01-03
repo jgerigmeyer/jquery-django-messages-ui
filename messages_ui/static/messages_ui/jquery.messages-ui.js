@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.1.7
+ * jQuery Messages UI 0.1.8
  *
  * Copyright (c) 2011, Jonny Gerig Meyer
  * All rights reserved.
@@ -24,12 +24,12 @@
             transientMessages = messages.filter(options.transientMessage);
         messageList.data('messages-ui-opts', options);
         if (options.closeLink) {
-            messageList.find(options.closeLink).click(function () {
+            messageList.on('click', options.message + ' ' + options.closeLink, function (e) {
+                e.preventDefault();
                 var thisMessage = $(this).closest(options.message);
                 thisMessage.stop().fadeOut('fast', function () {
                     thisMessage.detach();
                 });
-                return false;
             });
         }
         if (transientMessages.length) {

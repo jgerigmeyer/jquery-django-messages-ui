@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+0.1.8 (2013.01.03)
+------------------
+
+* Make close-link selector specific to within a message; use preventDefault.
+
 0.1.7 (2012.11.06)
 ------------------
 
