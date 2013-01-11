@@ -6,9 +6,9 @@ app. It should be called on the message list element, and accepts options for
 message selectors, transient messages (that disappear on click or key-press),
 and close-links.
 
-Messages can be dynamically added via ICanHaz.js, and there's a Python
-middleware to automatically add messages from the request into Ajax JSON
-responses.
+Messages can be dynamically added via Handlebars.js or ICanHaz.js, and
+there's a Python middleware to automatically add messages from the request
+into Ajax JSON responses.
 
 
 Dependencies
@@ -16,11 +16,13 @@ Dependencies
 
 - `jQuery`_ library
 - `jQuery doTimeout`_ plugin
+- (optionally) `Handlebars.js`_
 - (optionally) `ICanHaz.js`_
 - (optionally) `django-icanhaz`_ 0.2.0+
 
 .. _jQuery: http://jquery.com/
 .. _jQuery doTimeout: http://benalman.com/projects/jquery-dotimeout-plugin/
+.. _Handlebars.js: http://handlebarsjs.com/
 .. _ICanHaz.js: http://icanhazjs.com/
 .. _django-icanhaz: https://github.com/carljm/django-icanhaz
 
@@ -37,9 +39,17 @@ Linking the JS::
 
     <script src="{{ STATIC_URL }}messages_ui/jquery.messages-ui.js"></script>
 
+If using `Handlebars.js`_, also include the compiled JS template::
+
+    <script src="{{ STATIC_URL }}messages_ui/message.js"></script>
+
 Including the default HTML Template::
 
     {% include "messages_ui/_messages.html" %}
+
+If using `ICanHaz.js`_, use this template instead::
+
+    {% include "messages_ui/_messages_ich.html" %}
 
 Calling the plugin::
 
@@ -51,24 +61,34 @@ default values::
     $('#messages').messages({
         message: '.message',          // Selector for individual messages
         closeLink: '.close',          // Selector for link to close message
-                                      //      ...set to ``false`` to disable
+                                      //  ...set to ``false`` to disable
         transientMessage: '.success', // Selector for transient messages
         transientDelay: 500,          // Transient message fade delay (ms)
         transientFadeSpeed: 3000,     // Transient message fade speed (ms)
-        handleAjax: false             // Enable automatic AJAX handling
+        handleAjax: false,            // Enable automatic AJAX handling
+        templating: 'handlebars'      // JS templating engine
+                                      //  ...set to ``ich`` for ICanHaz.js
+                                      //  ...only used if ``handleAjax: true``
     });
 
 Note: After the plugin is called once, subsequent calls on the same element
 will default to the options passed the first time, unless new options are
 explicitly provided.
 
-Adding a message in JS (requires `ICanHaz.js`_)::
+Adding a message in JS with `Handlebars.js`_::
+
+    $(Handlebars.templates['message.html']({message: "Sample Message", tags: "info"})).appendTo($('#messages'));
+
+Adding a message in JS with `ICanHaz.js`_::
 
     $(ich.message({message: "Sample Message", tags: "info"})).appendTo($('#messages'));
 
-To override the default JS template, add a ``message.html`` file to a
-directory listed in your ``ICANHAZ_DIRS`` setting (a `django-icanhaz`_
-setting).
+To override the default JS template with `Handlebars.js`_, link to your own
+``message.html`` template in a precompiled JS file.
+
+To override the default JS template with `ICanHaz.js`_, add a
+``message.html`` file to a directory listed in your ``ICANHAZ_DIRS`` setting
+(a `django-icanhaz`_ setting).
 
 
 Ajax

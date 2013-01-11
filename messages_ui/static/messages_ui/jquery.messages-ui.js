@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.1.8
+ * jQuery Messages UI 0.2.0
  *
  * Copyright (c) 2011, Jonny Gerig Meyer
  * All rights reserved.
@@ -11,7 +11,7 @@
 /*jslint    browser:    true,
             indent:     4,
             confusion:  true */
-/*global    jQuery, ich */
+/*global    jQuery, ich, Handlebars */
 
 (function ($) {
 
@@ -56,7 +56,13 @@
                         if (json && json.messages) {
                             var messages = $(json.messages);
                             messages.each(function () {
-                                $(ich.message(this)).appendTo(messageList);
+                                var msg;
+                                if (options.templating === 'handlebars') {
+                                    msg = Handlebars.templates['message.html'](this);
+                                } else if (options.templating === 'ich') {
+                                    msg = ich.message(this);
+                                }
+                                $(msg).appendTo(messageList);
                             });
                             messageList.messages();
                         }
@@ -74,6 +80,8 @@
         closeLink: '.close',            // Selector for link that closes message (set to ``false`` to disable close-link handlers)
         transientDelay: 500,            // Delay before mousedown or keydown events trigger transient message fade (ms)
         transientFadeSpeed: 3000,       // Fade speed for transient messages (ms)
-        handleAjax: false               // Enable automatic handling of messages in "messages" key of JSON AJAX response
+        handleAjax: false,              // Enable automatic handling of messages in "messages" key of JSON AJAX response
+        templating: 'handlebars'        // Set to ``ich`` to use ICanHaz.js instead of Handlebars.js for templating
+                                        //      ...only used if ``handleAjax: true``
     };
 }(jQuery));

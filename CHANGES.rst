@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+0.2.0 (2013.01.11)
+------------------
+
+* Add option to use Handlebars.js (new default) instead of ICanHaz.js.
+
 0.1.8 (2013.01.03)
 ------------------
 
