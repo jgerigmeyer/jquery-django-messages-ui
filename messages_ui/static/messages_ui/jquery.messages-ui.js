@@ -1,7 +1,7 @@
 /**
  * jQuery Messages UI 0.2.1
  *
- * Copyright (c) 2011, Jonny Gerig Meyer
+ * Copyright (c) 2013, Jonny Gerig Meyer
  * All rights reserved.
  *
  * Licensed under the New BSD License
