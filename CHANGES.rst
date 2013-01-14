@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+0.2.1 (2013.01.14)
+------------------
+
+* Rewrite using method plugin architecture; simpler 'add' method to add msg.
+
 0.2.0 (2013.01.11)
 ------------------
 

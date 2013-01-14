@@ -75,13 +75,9 @@ Note: After the plugin is called once, subsequent calls on the same element
 will default to the options passed the first time, unless new options are
 explicitly provided.
 
-Adding a message in JS with `Handlebars.js`_::
+Adding a message in JS::
 
-    $(Handlebars.templates['message.html']({message: "Sample Message", tags: "info"})).appendTo($('#messages'));
-
-Adding a message in JS with `ICanHaz.js`_::
-
-    $(ich.message({message: "Sample Message", tags: "info"})).appendTo($('#messages'));
+    $('#messages').messages('add', {message: "Sample Message", tags: "info"});
 
 To override the default JS template with `Handlebars.js`_, link to your own
 ``message.html`` template in a precompiled JS file.

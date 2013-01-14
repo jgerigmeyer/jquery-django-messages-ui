@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.2.0
+ * jQuery Messages UI 0.2.1
  *
  * Copyright (c) 2011, Jonny Gerig Meyer
  * All rights reserved.
@@ -17,59 +17,89 @@
 
     'use strict';
 
-    $.fn.messages = function (opts) {
-        var messageList = $(this),
-            options = $.extend({}, $.fn.messages.defaults, messageList.data('messages-ui-opts'), opts),
-            messages = messageList.find(options.message),
-            transientMessages = messages.filter(options.transientMessage);
-        messageList.data('messages-ui-opts', options);
-        if (options.closeLink) {
-            messageList.on('click', options.message + ' ' + options.closeLink, function (e) {
-                e.preventDefault();
-                var thisMessage = $(this).closest(options.message);
-                thisMessage.stop().fadeOut('fast', function () {
-                    thisMessage.detach();
+    var methods = {
+        init: function (opts) {
+            var messageList = $(this);
+            var options = $.extend({}, $.fn.messages.defaults, messageList.data('messages-ui-opts'), opts);
+            messageList.data('messages-ui-opts', options);
+            if (options.closeLink) {
+                messageList.on('click', options.message + ' ' + options.closeLink, function (e) {
+                    e.preventDefault();
+                    var thisMessage = $(this).closest(options.message);
+                    methods['remove'](thisMessage);
                 });
-            });
-        }
-        if (transientMessages.length) {
-            $(document).bind('mousedown keydown', function (event) {
-                $.doTimeout(options.transientDelay, function () {
-                    transientMessages.fadeOut(options.transientFadeSpeed, function () {
-                        transientMessages.detach();
-                    });
-                    $(this).unbind(event);
-                });
-            });
-        }
-        if (options.handleAjax) {
-            $.ajaxSetup({
-                dataType: 'json',
-                dataFilter: function (data, type) {
-                    if (data && type === 'json') {
-                        var json;
-                        try {
-                            json = $.parseJSON(data);
-                        } catch (e) {
-                            json = false;
+            }
+            if (options.handleAjax) {
+                $.ajaxSetup({
+                    dataType: 'json',
+                    dataFilter: function (data, type) {
+                        if (data && type === 'json') {
+                            var json;
+                            try {
+                                json = $.parseJSON(data);
+                            } catch (e) {
+                                json = false;
+                            }
+                            if (json && json.messages) {
+                                var messages = $(json.messages);
+                                messages.each(function () {
+                                    methods['add'](this, messageList);
+                                });
+                            }
                         }
-                        if (json && json.messages) {
-                            var messages = $(json.messages);
-                            messages.each(function () {
-                                var msg;
-                                if (options.templating === 'handlebars') {
-                                    msg = Handlebars.templates['message.html'](this);
-                                } else if (options.templating === 'ich') {
-                                    msg = ich.message(this);
-                                }
-                                $(msg).appendTo(messageList);
-                            });
-                            messageList.messages();
-                        }
+                        return data;
                     }
-                    return data;
-                }
+                });
+            }
+            methods.bindHandlers(messageList);
+        },
+
+        add: function (msg_data, messageList) {
+            var msgList = messageList || $(this);
+            var options = $.extend({}, $.fn.messages.defaults, msgList.data('messages-ui-opts'));
+            var msg;
+            if (options.templating === 'handlebars') {
+                msg = Handlebars.templates['message.html'](msg_data);
+            } else if (options.templating === 'ich') {
+                msg = ich.message(msg_data);
+            }
+            $(msg).appendTo(msgList);
+            methods.bindHandlers(msgList);
+        },
+
+        remove: function (msg) {
+            msg.stop().fadeOut('fast', function () {
+                msg.detach();
             });
+        },
+
+        bindHandlers: function (messageList) {
+            var options = $.extend({}, $.fn.messages.defaults, messageList.data('messages-ui-opts'));
+            var messages = messageList.find(options.message);
+            var transientMessages = messages.filter(options.transientMessage);
+            if (transientMessages.length) {
+                transientMessages.each(function () {
+                    var msg = $(this);
+                    $(document).bind('mousedown keydown', function (event) {
+                        $.doTimeout(options.transientDelay, function () {
+                            msg.fadeOut(options.transientFadeSpeed, function () {
+                                msg.detach();
+                            });
+                            $(this).unbind(event);
+                        });
+                    });
+                });
+            }
+        }
+    };
+
+    $.fn.messages = function (method) {
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || !method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('Method ' + method + ' does not exist on jQuery.messages');
         }
     };
 
