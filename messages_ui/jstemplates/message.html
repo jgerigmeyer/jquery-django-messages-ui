@@ -1,4 +1,4 @@
 <li class="message {{tags}}">
-  <p class="body">{{message}}</p>
+  <p class="body">{{#escapeHTML}}{{message}}{{/escapeHTML}}{{^escapeHTML}}{{{message}}}{{/escapeHTML}}</p>
   <a href="#" class="close">dismiss this message</a>
 </li>

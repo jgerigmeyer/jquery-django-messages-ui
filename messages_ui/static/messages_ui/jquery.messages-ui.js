@@ -43,7 +43,7 @@
                             if (json && json.messages) {
                                 var messages = $(json.messages);
                                 messages.each(function () {
-                                    methods['add'](this, messageList);
+                                    methods['add'](this, opts, messageList);
                                 });
                             }
                         }
@@ -54,10 +54,11 @@
             methods.bindHandlers(messageList);
         },
 
-        add: function (msg_data, messageList) {
+        add: function (msg_data, opts, messageList) {
             var msgList = messageList || $(this);
-            var options = $.extend({}, $.fn.messages.defaults, msgList.data('messages-ui-opts'));
+            var options = $.extend({}, $.fn.messages.defaults, msgList.data('messages-ui-opts'), opts);
             var msg;
+            msg_data.escapeHTML = options.escapeHTML;
             if (options.templating === 'handlebars') {
                 msg = Handlebars.templates['message.html'](msg_data);
             } else if (options.templating === 'ich') {
@@ -111,7 +112,8 @@
         transientDelay: 500,            // Delay before mousedown or keydown events trigger transient message fade (ms)
         transientFadeSpeed: 3000,       // Fade speed for transient messages (ms)
         handleAjax: false,              // Enable automatic handling of messages in "messages" key of JSON AJAX response
-        templating: 'handlebars'        // Set to ``ich`` to use ICanHaz.js instead of Handlebars.js for templating
+        templating: 'handlebars',       // Set to ``ich`` to use ICanHaz.js instead of Handlebars.js for templating
                                         //      ...only used if ``handleAjax: true``
+        escapeHTML: true                // Set to ``false`` to not HTML-escape message content (allowing for in-line HTML in message)
     };
 }(jQuery));

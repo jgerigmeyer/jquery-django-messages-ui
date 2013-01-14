@@ -66,9 +66,11 @@ default values::
         transientDelay: 500,          // Transient message fade delay (ms)
         transientFadeSpeed: 3000,     // Transient message fade speed (ms)
         handleAjax: false,            // Enable automatic AJAX handling
-        templating: 'handlebars'      // JS templating engine
+        templating: 'handlebars',     // JS templating engine
                                       //  ...set to ``ich`` for ICanHaz.js
                                       //  ...only used if ``handleAjax: true``
+        escapeHTML: true              // Set ``false`` to display unescaped
+                                      // HTML in message content
     });
 
 Note: After the plugin is called once, subsequent calls on the same element
@@ -78,6 +80,10 @@ explicitly provided.
 Adding a message in JS::
 
     $('#messages').messages('add', {message: "Sample Message", tags: "info"});
+
+Adding a message with unescaped HTML in JS::
+
+    $('#messages').messages('add', {message: "<a href='/'>Sample Message</a>", tags: "info"}, {escapeHTML: false});
 
 To override the default JS template with `Handlebars.js`_, link to your own
 ``message.html`` template in a precompiled JS file.

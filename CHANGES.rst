@@ -5,6 +5,7 @@ CHANGES
 ------------------
 
 * Rewrite using method plugin architecture; simpler 'add' method to add msg.
+* Add option to display unescaped HTML in message content.
 
 0.2.0 (2013.01.11)
 ------------------
