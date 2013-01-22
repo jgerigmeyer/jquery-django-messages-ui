@@ -107,7 +107,9 @@ To enable automatic handling of messages from Ajax requests, add
     ``AjaxMessagesMiddleware`` converts all HTML AJAX responses into JSON
     responses with a ``messages`` key, and the HTML embedded in an ``html``
     key. If your site uses HTML AJAX responses, this will likely require
-    updates to other Ajax-handling code in your site.
+    updates to other Ajax-handling code in your site. To avoid this for a
+    particular response, set the attribute ``no_messages`` on that response to
+    ``True`` before it passes through ``AjaxMessagesMiddleware``.
 
     Similarly, ``handleAjax: true`` globally sets the default expected
     dataType for AJAX requests to ``"json"``.

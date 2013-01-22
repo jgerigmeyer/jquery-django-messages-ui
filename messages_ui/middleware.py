@@ -13,9 +13,7 @@ class AjaxMessagesMiddleware(object):
 
     If the AJAX response is already JSON, add a "messages" key to it (or
     append to an existing "messages" key) a list of messages (each
-    message is an object with "level", "message", and "tags" keys). If
-    an existing key "no_messages" is present and True, messages will not
-    be read or added.
+    message is an object with "level", "message", and "tags" keys).
 
     If the AJAX response is currently html, turn it into JSON and stuff
     the HTML content into the "html" key, adding a "messages" key as
@@ -24,12 +22,18 @@ class AjaxMessagesMiddleware(object):
     If the AJAX response is neither json nor html, return it as-is (with
     no messages attached, and without iterating over messages).
 
-    If the AJAX response has a status code other than 200, it will not
-    be modified (and messages will not be read).
+    If the AJAX response has a status code other than 200, or has an attribute
+    ``no_messages`` that is ``True``, it will not be modified (and messages
+    will not be read).
 
     """
     def process_response(self, request, response):
-        if request.is_ajax() and response.status_code == 200:
+        handle_response = (
+            request.is_ajax() and
+            response.status_code == 200 and
+            not getattr(response, 'no_messages', False)
+            )
+        if handle_response:
             content_type = response['content-type'].split(";")[0]
 
             if content_type == "application/json":
@@ -39,15 +43,14 @@ class AjaxMessagesMiddleware(object):
             else:
                 return response
 
-            if not data.get("no_messages", False):
-                messagelist = data.setdefault("messages", [])
+            messagelist = data.setdefault("messages", [])
 
-                for message in messages.get_messages(request):
-                    messagelist.append({
-                        "level": message.level,
-                        "message": message.message,
-                        "tags": message.tags,
-                    })
+            for message in messages.get_messages(request):
+                messagelist.append({
+                    "level": message.level,
+                    "message": message.message,
+                    "tags": message.tags,
+                })
 
             response.content = json.dumps(data)
             response["content-type"] = "application/json"
