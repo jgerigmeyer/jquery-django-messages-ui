@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.2.1
+ * jQuery Messages UI 0.2.3
  *
  * Copyright (c) 2013, Jonny Gerig Meyer
  * All rights reserved.
@@ -16,6 +16,8 @@
 (function ($) {
 
     'use strict';
+
+    var count = 0;
 
     var methods = {
         init: function (opts) {
@@ -51,7 +53,7 @@
                     }
                 });
             }
-            methods.bindHandlers(messageList);
+            methods.bindHandlers(messageList.find(options.message), options);
         },
 
         add: function (msg_data, opts, messageList) {
@@ -60,34 +62,39 @@
             var msg;
             msg_data.escapeHTML = options.escapeHTML;
             if (options.templating === 'handlebars') {
-                msg = Handlebars.templates['message.html'](msg_data);
+                msg = $(Handlebars.templates['message.html'](msg_data));
             } else if (options.templating === 'ich') {
-                msg = ich.message(msg_data);
+                msg = $(ich.message(msg_data));
             }
-            $(msg).appendTo(msgList);
-            methods.bindHandlers(msgList);
+            msg.appendTo(msgList);
+            methods.bindHandlers(msg, options);
         },
 
         remove: function (msg) {
             msg.stop().fadeOut('fast', function () {
-                msg.detach();
+                msg.remove();
             });
         },
 
-        bindHandlers: function (messageList) {
-            var options = $.extend({}, $.fn.messages.defaults, messageList.data('messages-ui-opts'));
-            var messages = messageList.find(options.message);
-            var transientMessages = messages.filter(options.transientMessage);
+        bindHandlers: function (messages, opts) {
+            var transientMessages = messages.filter(opts.transientMessage);
             if (transientMessages.length) {
+                var addTimer = function (el) {
+                    var thisCount = el.data('count');
+                    $(document).unbind('.msg-' + thisCount);
+                    el.unbind('.msg-' + thisCount);
+                    $.doTimeout(opts.transientDelay, function () {
+                        opts.transientCallback(el);
+                    });
+                };
                 transientMessages.each(function () {
                     var msg = $(this);
-                    $(document).bind('mousedown keydown', function (event) {
-                        $.doTimeout(options.transientDelay, function () {
-                            msg.fadeOut(options.transientFadeSpeed, function () {
-                                msg.detach();
-                            });
-                            $(this).unbind(event);
-                        });
+                    msg.data('count', ++count);
+                    $(document).one('mousedown.msg-' + count + ' keydown.msg-' + count, function () {
+                        addTimer(msg);
+                    });
+                    msg.one('mouseover.msg-' + count, function () {
+                        addTimer(msg);
                     });
                 });
             }
@@ -106,14 +113,16 @@
 
     /* Setup plugin defaults */
     $.fn.messages.defaults = {
-        message: '.message',            // Selector for individual messages
-        transientMessage: '.success',   // Selector for messages that will disappear on mousedown, keydown
-        closeLink: '.close',            // Selector for link that closes message (set to ``false`` to disable close-link handlers)
-        transientDelay: 500,            // Delay before mousedown or keydown events trigger transient message fade (ms)
-        transientFadeSpeed: 3000,       // Fade speed for transient messages (ms)
-        handleAjax: false,              // Enable automatic handling of messages in "messages" key of JSON AJAX response
-        templating: 'handlebars',       // Set to ``ich`` to use ICanHaz.js instead of Handlebars.js for templating
-                                        //      ...only used if ``handleAjax: true``
-        escapeHTML: true                // Set to ``false`` to not HTML-escape message content (allowing for in-line HTML in message)
+        message: '.message',                // Selector for individual messages
+        transientMessage: '.success',       // Selector for messages that will disappear on mousedown, keydown
+        closeLink: '.close',                // Selector for link that closes message (set to ``false`` to disable close-link handlers)
+        transientDelay: 500,                // Delay before mousedown, keydown, hover events trigger transient message callback (ms)
+        transientCallback: function (el) {  // Function called after transientDelay for transientMessages
+            el.fadeOut(2000, function () { el.remove(); });
+        },
+        handleAjax: false,                  // Enable automatic handling of messages in "messages" key of JSON AJAX response
+        templating: 'handlebars',           // Set to ``ich`` to use ICanHaz.js instead of Handlebars.js for templating
+                                            //      ...only used if ``handleAjax: true``
+        escapeHTML: true                    // Set to ``false`` to not HTML-escape message content (allowing for in-line HTML in message)
     };
 }(jQuery));

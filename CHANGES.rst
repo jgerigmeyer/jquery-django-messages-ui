@@ -1,6 +1,16 @@
 CHANGES
 =======
 
+0.2.3 (2013.01.24)
+------------------
+
+* Add option for function called on transient messages after transientDelay.
+
+0.2.2 (2013.01.21)
+------------------
+
+* Add response.no_messages option for disabling middleware.
+
 0.2.1 (2013.01.14)
 ------------------
 

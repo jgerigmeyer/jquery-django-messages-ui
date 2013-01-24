@@ -63,8 +63,11 @@ default values::
         closeLink: '.close',          // Selector for link to close message
                                       //  ...set to ``false`` to disable
         transientMessage: '.success', // Selector for transient messages
-        transientDelay: 500,          // Transient message fade delay (ms)
-        transientFadeSpeed: 3000,     // Transient message fade speed (ms)
+        transientDelay: 500,          // Transient message callback delay (ms)
+        transientCallback:            // Fn called after transientDelay
+            function (el) {
+                el.fadeOut(2000, function () { el.remove(); });
+            },
         handleAjax: false,            // Enable automatic AJAX handling
         templating: 'handlebars',     // JS templating engine
                                       //  ...set to ``ich`` for ICanHaz.js
