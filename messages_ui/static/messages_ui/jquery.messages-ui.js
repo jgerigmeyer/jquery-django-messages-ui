@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.2.3
+ * jQuery Messages UI 0.2.4
  *
  * Copyright (c) 2013, Jonny Gerig Meyer
  * All rights reserved.
@@ -27,8 +27,9 @@
             if (options.closeLink) {
                 messageList.on('click', options.message + ' ' + options.closeLink, function (e) {
                     e.preventDefault();
+                    $(this).blur();
                     var thisMessage = $(this).closest(options.message);
-                    methods['remove'](thisMessage);
+                    methods['remove'](thisMessage, opts, messageList);
                 });
             }
             if (options.handleAjax) {
@@ -53,7 +54,7 @@
                     }
                 });
             }
-            methods.bindHandlers(messageList.find(options.message), options);
+            methods.bindHandlers(messageList.find(options.message), options, messageList);
         },
 
         add: function (msg_data, opts, messageList) {
@@ -67,24 +68,28 @@
                 msg = $(ich.message(msg_data));
             }
             msg.appendTo(msgList);
-            methods.bindHandlers(msg, options);
+            methods.bindHandlers(msg, options, msgList);
+            return msg;
         },
 
-        remove: function (msg) {
-            msg.stop().fadeOut('fast', function () {
-                msg.remove();
-            });
+        remove: function (msg, opts, messageList) {
+            var msgList = messageList || $(this);
+            var options = $.extend({}, $.fn.messages.defaults, msgList.data('messages-ui-opts'), opts);
+            if (msg.data('count')) { $.doTimeout('msg-' + msg.data('count')); }
+            if (options.closeCallback) { options.closeCallback(msg); }
         },
 
-        bindHandlers: function (messages, opts) {
-            var transientMessages = messages.filter(opts.transientMessage);
+        bindHandlers: function (messages, opts, messageList) {
+            var msgList = messageList || $(this);
+            var options = $.extend({}, $.fn.messages.defaults, msgList.data('messages-ui-opts'), opts);
+            var transientMessages = messages.filter(options.transientMessage);
             if (transientMessages.length) {
                 var addTimer = function (el) {
                     var thisCount = el.data('count');
                     $(document).unbind('.msg-' + thisCount);
                     el.unbind('.msg-' + thisCount);
-                    $.doTimeout(opts.transientDelay, function () {
-                        opts.transientCallback(el);
+                    $.doTimeout('msg-' + thisCount, options.transientDelay, function () {
+                        if (options.transientCallback) { options.transientCallback(el); }
                     });
                 };
                 transientMessages.each(function () {
@@ -116,6 +121,11 @@
         message: '.message',                // Selector for individual messages
         transientMessage: '.success',       // Selector for messages that will disappear on mousedown, keydown
         closeLink: '.close',                // Selector for link that closes message (set to ``false`` to disable close-link handlers)
+        closeCallback: function (el) {      // Function called when closeLink is clicked
+            el.stop().fadeOut('fast', function () {
+                el.remove();
+            });
+        },
         transientDelay: 500,                // Delay before mousedown, keydown, hover events trigger transient message callback (ms)
         transientCallback: function (el) {  // Function called after transientDelay for transientMessages
             el.fadeOut(2000, function () { el.remove(); });

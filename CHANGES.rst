@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+0.2.4 (2013.01.28)
+------------------
+
+* Add option for function called after closeLink is clicked.
+
 0.2.3 (2013.01.24)
 ------------------
 

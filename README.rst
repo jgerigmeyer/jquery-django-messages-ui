@@ -62,6 +62,12 @@ default values::
         message: '.message',          // Selector for individual messages
         closeLink: '.close',          // Selector for link to close message
                                       //  ...set to ``false`` to disable
+        closeCallback:                // Fn called when closeLink is clicked
+            function (el) {
+                el.stop().fadeOut('fast', function () {
+                    el.remove();
+                });
+            },
         transientMessage: '.success', // Selector for transient messages
         transientDelay: 500,          // Transient message callback delay (ms)
         transientCallback:            // Fn called after transientDelay
