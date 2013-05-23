@@ -16,13 +16,13 @@ Dependencies
 
 - `jQuery`_ library
 - `jQuery doTimeout`_ plugin
-- (optionally) `Handlebars.js`_
+- (optionally) `handlebars.runtime.js`_ 1.0.0-rc.4
 - (optionally) `ICanHaz.js`_
 - (optionally) `django-icanhaz`_ 0.2.0+
 
 .. _jQuery: http://jquery.com/
 .. _jQuery doTimeout: http://benalman.com/projects/jquery-dotimeout-plugin/
-.. _Handlebars.js: http://handlebarsjs.com/
+.. _handlebars.runtime.js: http://handlebarsjs.com/
 .. _ICanHaz.js: http://icanhazjs.com/
 .. _django-icanhaz: https://github.com/carljm/django-icanhaz
 
@@ -39,7 +39,7 @@ Linking the JS::
 
     <script src="{{ STATIC_URL }}messages_ui/jquery.messages-ui.js"></script>
 
-If using `Handlebars.js`_, also include the compiled JS template::
+If using `handlebars.runtime.js`_, also include the compiled JS template::
 
     <script src="{{ STATIC_URL }}messages_ui/message.js"></script>
 
@@ -94,8 +94,8 @@ Adding a message with unescaped HTML in JS::
 
     $('#messages').messages('add', {message: "<a href='/'>Sample Message</a>", tags: "info"}, {escapeHTML: false});
 
-To override the default JS template with `Handlebars.js`_, link to your own
-``message.html`` template in a precompiled JS file.
+To override the default JS template with `handlebars.runtime.js`_, link to
+your own ``message.html`` template in a precompiled JS file.
 
 To override the default JS template with `ICanHaz.js`_, add a
 ``message.html`` file to a directory listed in your ``ICANHAZ_DIRS`` setting

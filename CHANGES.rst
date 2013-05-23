@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+0.2.5 (2013.05.23)
+------------------
+
+* Precompile Handlebars template with 1.0.0-rc.4.
+* Make AjaxMessagesMiddleware Py3-compatible.
+
 0.2.4 (2013.01.28)
 ------------------
 
