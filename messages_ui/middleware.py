@@ -5,8 +5,6 @@ except ImportError:
 
 from django.contrib import messages
 
-from . import compat
-
 
 
 class AjaxMessagesMiddleware(object):
@@ -38,10 +36,12 @@ class AjaxMessagesMiddleware(object):
         if handle_response:
             content_type = response['content-type'].split(";")[0]
 
+            content = response.content.decode('utf-8')
+
             if content_type == "application/json":
-                data = json.loads(response.content)
+                data = json.loads(content)
             elif content_type == "text/html":
-                data = {"html": compat.text_type(response.content)}
+                data = {"html": content}
             else:
                 return response
 
