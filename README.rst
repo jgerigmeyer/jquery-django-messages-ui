@@ -16,7 +16,7 @@ Dependencies
 
 - `jQuery`_ library
 - `jQuery doTimeout`_ plugin
-- (optionally) `handlebars.runtime.js`_ 1.0.0-rc.4
+- (optionally) `handlebars.runtime.js`_ 1.0.0
 - (optionally) `ICanHaz.js`_
 - (optionally) `django-icanhaz`_ 0.2.0+
 
