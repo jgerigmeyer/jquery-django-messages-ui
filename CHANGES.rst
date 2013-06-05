@@ -1,11 +1,11 @@
 CHANGES
 =======
 
-master (unreleased)
+0.2.6 (2013.06.05)
 -------------------
 
 * Fix AjaxMessagesMiddleware encoding issue with Python 3 and JSON response.
-
+* Precompile Handlebars template with 1.0.0.
 
 0.2.5 (2013.05.23)
 ------------------

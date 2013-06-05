@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.2.4
+ * jQuery Messages UI 0.2.6
  *
  * Copyright (c) 2013, Jonny Gerig Meyer
  * All rights reserved.
