@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+master (unreleased)
+-------------------
+
+* Fix AjaxMessagesMiddleware encoding issue with Python 3 and JSON response.
+
+
 0.2.5 (2013.05.23)
 ------------------
 
