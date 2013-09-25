@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+0.2.7 (2013.09.25)
+-------------------
+
+* Remove transient messages on scroll (also mousedown, keydown, mouseover).
+
 0.2.6 (2013.06.05)
 -------------------
 

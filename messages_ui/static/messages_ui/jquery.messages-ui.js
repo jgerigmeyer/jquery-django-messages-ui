@@ -1,5 +1,5 @@
 /**
- * jQuery Messages UI 0.2.6
+ * jQuery Messages UI 0.2.7
  *
  * Copyright (c) 2013, Jonny Gerig Meyer
  * All rights reserved.
@@ -95,7 +95,7 @@
                 transientMessages.each(function () {
                     var msg = $(this);
                     msg.data('count', ++count);
-                    $(document).one('mousedown.msg-' + count + ' keydown.msg-' + count, function () {
+                    $(document).one('mousedown.msg-' + count + ' keydown.msg-' + count + ' scroll.msg-' + count, function () {
                         addTimer(msg);
                     });
                     msg.one('mouseover.msg-' + count, function () {
