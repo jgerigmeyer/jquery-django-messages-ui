@@ -46,8 +46,8 @@ the `development version`_, along with either the
 
 .. _`production version`: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/dist/django-messages-ui.min.js
 .. _`development version`: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/dist/django-messages-ui.js
-.. _`Handlebars.js precompiled template`_: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/static/messages_ui/message.js
-.. _`ICanHaz.js template`_: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/jstemplates/message.html
+.. _`Handlebars.js precompiled template`: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/static/messages_ui/message.js
+.. _`ICanHaz.js template`: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/jstemplates/message.html
 
 Linking the JS::
 
@@ -57,7 +57,7 @@ If using `Handlebars.js`_, also include the `precompiled JS template`_::
 
     <script src="messages_ui/static/messages_ui/message.js"></script>
 
-.. _`precompiled JS template`_: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/static/messages_ui/message.js
+.. _`precompiled JS template`: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/static/messages_ui/message.js
 
 To override the default JS template using `Handlebars.js`_, link to your own
 precompiled JS file with a ``message`` template.
@@ -71,7 +71,7 @@ Installation as a Django Plugin
 -------------------------------
 
 If using as a Django plugin, download the tarball from `PyPI`_. In your Django
-project settings, add "messages_ui" to your INSTALLED_APPS.
+project settings, add ``"messages_ui"`` to your INSTALLED_APPS.
 
 .. _`PyPI`: https://pypi.python.org/pypi/django-messages-ui
 

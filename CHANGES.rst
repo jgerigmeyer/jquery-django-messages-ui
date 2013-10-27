@@ -1,7 +1,7 @@
 CHANGES
 =======
 
-1.0.0 (2013.10.24)
+1.0.0 (2013.10.27)
 -------------------
 
 * Publish as a standalone jQuery plugin.
