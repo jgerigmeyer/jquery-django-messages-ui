@@ -8,11 +8,11 @@ Getting Started
 ---------------
 
 django-messages-ui can be used as a standalone jQuery plugin for adding and
-removing client-side messages, or as a Django plugin package to additionally
-support the Django contrib.messages app. It should be called on the message
-list element, and accepts options for message selectors, transient messages
-(that disappear on click or key-press), and close-links. The messages
-themselves should be styled with CSS.
+removing client-side messages, or as a Django add-on to additionally support
+the Django contrib.messages app. It should be called on the message list
+element, and accepts options for message selectors, transient messages (that
+disappear on click or key-press), and close-links. The messages themselves
+should be styled with CSS.
 
 Messages can be dynamically added via `Handlebars.js`_ or `ICanHaz.js`_, and if
 used as a Django plugin there's a Python middleware to automatically add
@@ -68,36 +68,39 @@ id="message" type="text/html">`` tag and include it in your HTML, or import it
 in JS using ``ich.addTemplate('message', YOUR_TEMPLATE_STRING)``.
 
 
-Installation as a Django Plugin
--------------------------------
+Installation with Django
+------------------------
 
-If using as a Django plugin, download the tarball from `PyPI`_. In your Django
-project settings, add ``"messages_ui"`` to your INSTALLED_APPS.
+If using with Django, just ``pip install django-messages-ui`` to install (or
+download the tarball from `PyPI`_, unpack it, and run ``python setup.py
+install``). In your Django project settings, add ``"messages_ui"`` to your
+``INSTALLED_APPS`` setting.
 
 .. _`PyPI`: https://pypi.python.org/pypi/django-messages-ui
 
 Linking the JS::
 
-    <script src="{{ STATIC_URL }}messages_ui/django-messages-ui.js"></script>
+    <script src="{% static 'messages_ui/django-messages-ui.js' %}"></script>
 
 If using `Handlebars.js`_, also include the precompiled JS template::
 
-    <script src="{{ STATIC_URL }}messages_ui/message.js"></script>
+    <script src="{% static 'messages_ui/message.js' %}"></script>
 
-Including the default HTML Template::
+Including the default HTML template::
 
     {% include "messages_ui/_messages.html" %}
 
-If using `ICanHaz.js`_, use this template instead::
+If using `ICanHaz.js`_ to insert messages on the client side, use this template
+instead::
 
     {% include "messages_ui/_messages_ich.html" %}
 
 To override the default JS template using `Handlebars.js`_, link to your own
 precompiled JS file with a ``message`` template.
 
-To override the default JS template using `ICanHaz.js`_, add a ``message.html``
-file to a directory listed in your ``ICANHAZ_DIRS`` setting (a
-`django-icanhaz`_ setting).
+To override the default JS template using `ICanHaz.js`_ and `django-icanhaz`_,
+add a ``message.html`` file to a directory listed in your ``ICANHAZ_DIRS``
+setting.
 
 
 Ajax
@@ -155,9 +158,11 @@ default values::
                                       // HTML in message content
     });
 
-Note: After the plugin is called once, subsequent calls on the same element
-will default to the options passed the first time, unless new options are
-explicitly provided.
+.. note::
+
+   After the plugin is called once, subsequent calls on the same element will
+   default to the options passed the first time, unless new options are
+   explicitly provided.
 
 Adding a message in JS::
 
