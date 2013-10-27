@@ -62,9 +62,10 @@ If using `Handlebars.js`_, also include the `precompiled JS template`_::
 To override the default JS template using `Handlebars.js`_, link to your own
 precompiled JS file with a ``message`` template.
 
-To override the default JS template using `ICanHaz.js`_, wrap your ICanHaz
-template in a ``<script id="message" type="text/html">`` tag, or import it
-using ``ich.addTemplate('message', YOUR_TEMPLATE_STRING)``.
+If using `ICanHaz.js`_, wrap the `ICanHaz.js template`_ (or your own custom
+template, if you don't want to use the default template) in a ``<script
+id="message" type="text/html">`` tag and include it in your HTML, or import it
+in JS using ``ich.addTemplate('message', YOUR_TEMPLATE_STRING)``.
 
 
 Installation as a Django Plugin
