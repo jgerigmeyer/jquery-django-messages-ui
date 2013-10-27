@@ -2,7 +2,7 @@
 *~
 *.egg
 django_messages_ui*.egg-info
-dist/*.tar.gz
+pydist/
 /node_modules/
 jscov/
 jscov_temp/

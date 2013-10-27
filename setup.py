@@ -4,8 +4,10 @@ from setuptools import setup
 
 here = dirname(__file__)
 
-long_description = (open(join(here, "README.rst")).read() + "\n\n" +
-                    open(join(here, "CHANGES.rst")).read()
+long_description = (
+    open(join(here, "README.rst")).read() + "\n\n" +
+    open(join(here, "CHANGES.rst")).read()
+    )
 
 def get_version():
     fh = open(join(here, "django-messages-ui.jquery.json"))
