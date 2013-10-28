@@ -1,17 +1,10 @@
-/**
- * jQuery Messages UI 0.2.7
+/*
+ * django-messages-ui
+ * https://github.com/jgerigmeyer/jquery-django-messages-ui
  *
- * Copyright (c) 2013, Jonny Gerig Meyer
- * All rights reserved.
- *
- * Licensed under the New BSD License
- * See: http://www.opensource.org/licenses/bsd-license.php
+ * Copyright (c) 2013 Jonny Gerig Meyer
+ * Licensed under the MIT license.
  */
-
-/*jslint    browser:    true,
-            indent:     4,
-            confusion:  true */
-/*global    jQuery, ich, Handlebars */
 
 (function ($) {
 
@@ -55,20 +48,24 @@
                 });
             }
             methods.bindHandlers(messageList.find(options.message), options, messageList);
+            return messageList;
         },
 
         add: function (msg_data, opts, messageList) {
             var msgList = messageList || $(this);
             var options = $.extend({}, $.fn.messages.defaults, msgList.data('messages-ui-opts'), opts);
+            var data = msg_data || {};
             var msg;
-            msg_data.escapeHTML = options.escapeHTML;
-            if (options.templating === 'handlebars') {
-                msg = $(Handlebars.templates['message.html'](msg_data));
-            } else if (options.templating === 'ich') {
-                msg = $(ich.message(msg_data));
+            data.escapeHTML = options.escapeHTML;
+            if (options.templating === 'handlebars' && Handlebars && Handlebars.templates && Handlebars.templates['message']) {
+                msg = $(Handlebars.templates['message'](data));
+            } else if (options.templating === 'ich' && ich && ich.message) {
+                msg = $(ich.message(data));
             }
-            msg.appendTo(msgList);
-            methods.bindHandlers(msg, options, msgList);
+            if (msg) {
+                msg.appendTo(msgList);
+                methods.bindHandlers(msg, options, msgList);
+            }
             return msg;
         },
 
@@ -86,8 +83,8 @@
             if (transientMessages.length) {
                 var addTimer = function (el) {
                     var thisCount = el.data('count');
-                    $(document).unbind('.msg-' + thisCount);
-                    el.unbind('.msg-' + thisCount);
+                    $(document).off('.msg-' + thisCount);
+                    el.off('.msg-' + thisCount);
                     $.doTimeout('msg-' + thisCount, options.transientDelay, function () {
                         if (options.transientCallback) { options.transientCallback(el); }
                     });
@@ -103,6 +100,11 @@
                     });
                 });
             }
+        },
+
+        // Expose internal methods to allow stubbing in tests
+        exposeMethods: function () {
+            return methods;
         }
     };
 
@@ -132,7 +134,6 @@
         },
         handleAjax: false,                  // Enable automatic handling of messages in "messages" key of JSON AJAX response
         templating: 'handlebars',           // Set to ``ich`` to use ICanHaz.js instead of Handlebars.js for templating
-                                            //      ...only used if ``handleAjax: true``
         escapeHTML: true                    // Set to ``false`` to not HTML-escape message content (allowing for in-line HTML in message)
     };
 }(jQuery));

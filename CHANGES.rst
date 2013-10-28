@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+1.0.0 (2013.10.27)
+-------------------
+
+* Publish as a standalone jQuery plugin.
+* Add JS unit tests.
+
 0.2.7 (2013.09.25)
 -------------------
 
