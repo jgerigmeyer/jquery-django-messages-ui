@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+1.0.1 (2013.10.27)
+-------------------
+
+* Fix manifest.in to include package json file.
+
 1.0.0 (2013.10.27)
 -------------------
 

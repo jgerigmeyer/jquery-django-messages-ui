@@ -1,4 +1,4 @@
-/*! Django Messages UI - v1.0.0 - 2013-10-27
+/*! Django Messages UI - v1.0.1 - 2013-10-27
 * https://github.com/jgerigmeyer/jquery-django-messages-ui
 * Copyright (c) 2013 Jonny Gerig Meyer; Licensed MIT */
 (function ($) {
