@@ -14,8 +14,9 @@ CHANGES
 1.0.0 (2013.10.27)
 -------------------
 
-* Publish as a standalone jQuery plugin.
-* Add JS unit tests.
+* Publish as a standalone jQuery plugin. Add JS unit tests.
+* BACKWARDS INCOMPATIBLE: js filename changed from jquery.messages-ui.js to
+django-messages-ui.js
 
 0.2.7 (2013.09.25)
 -------------------
