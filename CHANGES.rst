@@ -16,7 +16,7 @@ CHANGES
 
 * Publish as a standalone jQuery plugin. Add JS unit tests.
 * BACKWARDS INCOMPATIBLE: js filename changed from jquery.messages-ui.js to
-django-messages-ui.js
+  django-messages-ui.js
 
 0.2.7 (2013.09.25)
 -------------------
