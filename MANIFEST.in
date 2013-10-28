@@ -2,6 +2,7 @@ include AUTHORS.rst
 include CHANGES.rst
 include LICENSE-MIT
 include README.rst
+include django-messages-ui.jquery.json
 
 recursive-include messages_ui/static *.js
 recursive-include messages_ui/templates *.html
