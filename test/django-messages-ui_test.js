@@ -162,6 +162,22 @@
         assert.htmlEqual(this.hbsMsgHtml, this.ichMsgHtml, 'hbsMsg and ichMsg are identical');
     });
 
+    test('uses Handlebars namespace, if provided', 1, function (assert) {
+        window.tst_namespace = {templates: Handlebars.templates};
+        delete Handlebars.templates;
+        this.container.messages('add', this.data, {tplNamespace: 'tst_namespace'});
+
+        assert.htmlEqual(this.container.children('.message:last-child').get(0).outerHTML, this.hbsMsgHtml, 'new msg was appended to msgList');
+
+        delete window.tst_namespace;
+    });
+
+    test('defaults to Handlebars namespace, if options.tplNamespace is missing', 1, function (assert) {
+        this.container.messages('add', this.data, {tplNamespace: null});
+
+        assert.htmlEqual(this.container.children('.message:last-child').get(0).outerHTML, this.hbsMsgHtml, 'new msg was appended to msgList');
+    });
+
     test('appends to msgList arg, if provided', 1, function (assert) {
         var list = $('<div class="new-list"></div>').appendTo(this.container);
         this.container.messages('add', this.data, undefined, list);

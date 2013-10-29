@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+1.0.3 (2013.10.29)
+-------------------
+
+* Add option for Handlebars templates global namespace.
+
 1.0.2 (2013.10.27)
 -------------------
 

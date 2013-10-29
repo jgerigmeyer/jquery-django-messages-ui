@@ -154,8 +154,10 @@ default values::
         handleAjax: false,            // Enable automatic AJAX handling
         templating: 'handlebars',     // JS templating engine
                                       //  ...set to ``ich`` to use ICanHaz.js
+        tplNamespace: 'Handlebars',   // Global namespace where precompiled
+                                      //  ...Handlebars template is stored
         escapeHTML: true              // Set ``false`` to display unescaped
-                                      // HTML in message content
+                                      //  ...HTML in message content
     });
 
 .. note::

@@ -55,10 +55,11 @@
             var msgList = messageList || $(this);
             var options = $.extend({}, $.fn.messages.defaults, msgList.data('messages-ui-opts'), opts);
             var data = msg_data || {};
+            var namespace = window[options.tplNamespace] || Handlebars;
             var msg;
             data.escapeHTML = options.escapeHTML;
-            if (options.templating === 'handlebars' && Handlebars && Handlebars.templates && Handlebars.templates['message']) {
-                msg = $(Handlebars.templates['message'](data));
+            if (options.templating === 'handlebars' && namespace && namespace.templates && namespace.templates['message']) {
+                msg = $(namespace.templates['message'](data));
             } else if (options.templating === 'ich' && ich && ich.message) {
                 msg = $(ich.message(data));
             }
@@ -134,6 +135,7 @@
         },
         handleAjax: false,                  // Enable automatic handling of messages in "messages" key of JSON AJAX response
         templating: 'handlebars',           // Set to ``ich`` to use ICanHaz.js instead of Handlebars.js for templating
+        tplNamespace: 'Handlebars',         // Global namespace where precompiled Handlebars template is stored
         escapeHTML: true                    // Set to ``false`` to not HTML-escape message content (allowing for in-line HTML in message)
     };
 }(jQuery));
