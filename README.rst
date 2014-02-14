@@ -52,11 +52,11 @@ the `development version`_, along with either the
 
 Linking the JS::
 
-    <script src="dist/django-messages-ui.min.js"></script>
+  <script src="dist/django-messages-ui.min.js"></script>
 
 If desired, also include the `precompiled JS template`_::
 
-    <script src="messages_ui/static/messages_ui/message.js"></script>
+  <script src="messages_ui/static/messages_ui/message.js"></script>
 
 .. _`precompiled JS template`: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/static/messages_ui/message.js
 
@@ -81,20 +81,20 @@ install``). In your Django project settings, add ``"messages_ui"`` to your
 
 Linking the JS::
 
-    <script src="{% static 'messages_ui/django-messages-ui.js' %}"></script>
+  <script src="{% static 'messages_ui/django-messages-ui.js' %}"></script>
 
 If desired, also include the precompiled JS template::
 
-    <script src="{% static 'messages_ui/message.js' %}"></script>
+  <script src="{% static 'messages_ui/message.js' %}"></script>
 
 Including the default HTML template::
 
-    {% include "messages_ui/_messages.html" %}
+  {% include "messages_ui/_messages.html" %}
 
 If using `ICanHaz.js`_ to insert messages on the client side, use this template
 instead::
 
-    {% include "messages_ui/_messages_ich.html" %}
+  {% include "messages_ui/_messages_ich.html" %}
 
 To override the default JS template, link to your own precompiled JS file with
 a ``message`` template.
@@ -115,15 +115,15 @@ To enable automatic handling of messages from Ajax requests, add
 
 .. warning::
 
-    ``AjaxMessagesMiddleware`` converts all HTML AJAX responses into JSON
-    responses with a ``messages`` key, and the HTML embedded in an ``html``
-    key. If your site uses HTML AJAX responses, this will likely require
-    updates to other Ajax-handling code in your site. To avoid this for a
-    particular response, set the attribute ``no_messages`` on that response to
-    ``True`` before it passes through ``AjaxMessagesMiddleware``.
+  ``AjaxMessagesMiddleware`` converts all HTML AJAX responses into JSON
+  responses with a ``messages`` key, and the HTML embedded in an ``html``
+  key. If your site uses HTML AJAX responses, this will likely require
+  updates to other Ajax-handling code in your site. To avoid this for a
+  particular response, set the attribute ``no_messages`` on that response to
+  ``True`` before it passes through ``AjaxMessagesMiddleware``.
 
-    Similarly, ``handleAjax: true`` globally sets the default expected
-    dataType for AJAX requests to ``"json"``.
+  Similarly, ``handleAjax: true`` globally sets the default expected
+  dataType for AJAX requests to ``"json"``.
 
 
 Usage
@@ -131,48 +131,52 @@ Usage
 
 Calling the plugin::
 
-    $('#messages').messages();
+  $('#messages').messages();
 
 Calling the plugin with a variety of options explicitly configured to their
 default values::
 
-    $('#messages').messages({
-        message: '.message',          // Selector for individual messages
-        closeLink: '.close',          // Selector for link to close message
-                                      //  ...set to ``false`` to disable
-        closeCallback:                // Fn called when closeLink is clicked
-            function (el) {
-                el.stop().fadeOut('fast', function () {
-                    el.remove();
-                });
-            },
-        transientMessage: '.success', // Selector for transient messages
-        transientDelay: 500,          // Transient message callback delay (ms)
-        transientCallback:            // Fn called after transientDelay
-            function (el) {
-                el.fadeOut(2000, function () { el.remove(); });
-            },
-        handleAjax: false,            // Enable automatic AJAX handling
-        tplNamespace: 'Handlebars.templates',
-                                      // Global namespace where precompiled
-                                      // ...callable template is stored
-        tplName: 'message',           // Template name (must be precompiled
-                                      // ...and callable as a fn, accepting
-                                      // ...data as first argument)
-        escapeHTML: true              // Set ``false`` to display unescaped
-                                      //  ...HTML in message content
-    });
+  $('#messages').messages({
+    message: '.message',          // Selector for individual messages
+    closeLink: '.close',          // Selector for link to close message
+                                  //  ...set to ``false`` to disable
+    closeCallback:                // Fn called when closeLink is clicked
+      function (el) {
+        el.stop().fadeOut('fast', function () {
+          el.remove();
+        });
+      },
+    transientMessage: '.success', // Selector for transient messages
+    transientDelay: 500,          // Transient message callback delay (ms)
+    transientCallback:            // Fn called after transientDelay
+      function (el) {
+        el.fadeOut(2000, function () { el.remove(); });
+      },
+    handleAjax: false,            // Enable automatic AJAX handling
+    tplNamespace: 'Handlebars.templates',
+                                  // Global namespace where precompiled
+                                  // ...callable template is stored
+    tplName: 'message',           // Template name (must be precompiled
+                                  // ...and callable as a fn, accepting
+                                  // ...data as first argument)
+    escapeHTML: true              // Set ``false`` to display unescaped
+                                  //  ...HTML in message content
+  });
 
 .. note::
 
-   After the plugin is called once, subsequent calls on the same element will
-   default to the options passed the first time, unless new options are
-   explicitly provided.
+ After the plugin is called once, subsequent calls on the same element will
+ default to the options passed the first time, unless new options are
+ explicitly provided.
 
 Adding a message in JS::
 
-    $('#messages').messages('add', {message: "Sample Message", tags: "info"});
+  $('#messages').messages('add', {message: "Sample Message", tags: "info"});
 
 Adding a message with unescaped HTML in JS::
 
-    $('#messages').messages('add', {message: "<a href='/'>Sample Message</a>", tags: "info"}, {escapeHTML: false});
+  $('#messages').messages(
+    'add',
+    { message: "<a href='/'>Sample Message</a>", tags: "info" },
+    { escapeHTML: false }
+  );
