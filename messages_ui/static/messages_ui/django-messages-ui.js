@@ -55,13 +55,15 @@
             var msgList = messageList || $(this);
             var options = $.extend({}, $.fn.messages.defaults, msgList.data('messages-ui-opts'), opts);
             var data = msg_data || {};
-            var namespace = window[options.tplNamespace] || Handlebars;
+            var namespaceArr = options.tplNamespace.split('.');
+            var namespace = window[namespaceArr[0]];
             var msg;
             data.escapeHTML = options.escapeHTML;
-            if (options.templating === 'handlebars' && namespace && namespace.templates && namespace.templates['message']) {
-                msg = $(namespace.templates['message'](data));
-            } else if (options.templating === 'ich' && ich && ich.message) {
-                msg = $(ich.message(data));
+            for (var i = 1; i < namespaceArr.length; i = i + 1) {
+                namespace = namespace[namespaceArr[i]];
+            }
+            if (namespace && namespace[options.tplName]) {
+                msg = $(namespace[options.tplName](data));
             }
             if (msg) {
                 msg.appendTo(msgList);
@@ -121,21 +123,21 @@
 
     /* Setup plugin defaults */
     $.fn.messages.defaults = {
-        message: '.message',                // Selector for individual messages
-        transientMessage: '.success',       // Selector for messages that will disappear on mousedown, keydown
-        closeLink: '.close',                // Selector for link that closes message (set to ``false`` to disable close-link handlers)
-        closeCallback: function (el) {      // Function called when closeLink is clicked
+        message: '.message',                    // Selector for individual messages
+        transientMessage: '.success',           // Selector for messages that will disappear on mousedown, keydown
+        closeLink: '.close',                    // Selector for link that closes message (set to ``false`` to disable close-link handlers)
+        closeCallback: function (el) {          // Function called when closeLink is clicked
             el.stop().fadeOut('fast', function () {
                 el.remove();
             });
         },
-        transientDelay: 500,                // Delay before mousedown, keydown, hover events trigger transient message callback (ms)
-        transientCallback: function (el) {  // Function called after transientDelay for transientMessages
+        transientDelay: 500,                    // Delay before mousedown, keydown, hover events trigger transient message callback (ms)
+        transientCallback: function (el) {      // Function called after transientDelay for transientMessages
             el.fadeOut(2000, function () { el.remove(); });
         },
-        handleAjax: false,                  // Enable automatic handling of messages in "messages" key of JSON AJAX response
-        templating: 'handlebars',           // Set to ``ich`` to use ICanHaz.js instead of Handlebars.js for templating
-        tplNamespace: 'Handlebars',         // Global namespace where precompiled Handlebars template is stored
-        escapeHTML: true                    // Set to ``false`` to not HTML-escape message content (allowing for in-line HTML in message)
+        handleAjax: false,                      // Enable automatic handling of messages in "messages" key of JSON AJAX response
+        tplNamespace: 'Handlebars.templates',   // Global namespace where precompiled callable template is stored
+        tplName: 'message',                     // Template name (must be precompiled and callable as a fn, accepting data as first argument)
+        escapeHTML: true                        // Set to ``false`` to not HTML-escape message content (allowing for in-line HTML in message)
     };
 }(jQuery));

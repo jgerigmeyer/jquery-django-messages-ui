@@ -14,7 +14,8 @@ element, and accepts options for message selectors, transient messages (that
 disappear on click or key-press), and close-links. The messages themselves
 should be styled with CSS.
 
-Messages can be dynamically added via `Handlebars.js`_ or `ICanHaz.js`_, and if
+Messages can be dynamically added via `Handlebars.js`_, `ICanHaz.js`_, or any
+other templating engine which creates precompiled callable template fns. If
 used as a Django plugin there's a Python middleware to automatically add
 messages from the request into Ajax JSON responses.
 
@@ -53,14 +54,14 @@ Linking the JS::
 
     <script src="dist/django-messages-ui.min.js"></script>
 
-If using `Handlebars.js`_, also include the `precompiled JS template`_::
+If desired, also include the `precompiled JS template`_::
 
     <script src="messages_ui/static/messages_ui/message.js"></script>
 
 .. _`precompiled JS template`: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/static/messages_ui/message.js
 
-To override the default JS template using `Handlebars.js`_, link to your own
-precompiled JS file with a ``message`` template.
+To override the default JS template, link to your own precompiled JS file with
+a ``message`` template.
 
 If using `ICanHaz.js`_, wrap the `ICanHaz.js template`_ (or your own custom
 template, if you don't want to use the default template) in a ``<script
@@ -82,7 +83,7 @@ Linking the JS::
 
     <script src="{% static 'messages_ui/django-messages-ui.js' %}"></script>
 
-If using `Handlebars.js`_, also include the precompiled JS template::
+If desired, also include the precompiled JS template::
 
     <script src="{% static 'messages_ui/message.js' %}"></script>
 
@@ -95,8 +96,8 @@ instead::
 
     {% include "messages_ui/_messages_ich.html" %}
 
-To override the default JS template using `Handlebars.js`_, link to your own
-precompiled JS file with a ``message`` template.
+To override the default JS template, link to your own precompiled JS file with
+a ``message`` template.
 
 To override the default JS template using `ICanHaz.js`_ and `django-icanhaz`_,
 add a ``message.html`` file to a directory listed in your ``ICANHAZ_DIRS``
@@ -152,10 +153,12 @@ default values::
                 el.fadeOut(2000, function () { el.remove(); });
             },
         handleAjax: false,            // Enable automatic AJAX handling
-        templating: 'handlebars',     // JS templating engine
-                                      //  ...set to ``ich`` to use ICanHaz.js
-        tplNamespace: 'Handlebars',   // Global namespace where precompiled
-                                      //  ...Handlebars template is stored
+        tplNamespace: 'Handlebars.templates',
+                                      // Global namespace where precompiled
+                                      // ...callable template is stored
+        tplName: 'message',           // Template name (must be precompiled
+                                      // ...and callable as a fn, accepting
+                                      // ...data as first argument)
         escapeHTML: true              // Set ``false`` to display unescaped
                                       //  ...HTML in message content
     });

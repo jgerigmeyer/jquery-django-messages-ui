@@ -162,8 +162,8 @@
         assert.htmlEqual(this.hbsMsgHtml, this.ichMsgHtml, 'hbsMsg and ichMsg are identical');
     });
 
-    test('uses Handlebars namespace, if provided', 1, function (assert) {
-        window.tst_namespace = {templates: Handlebars.templates};
+    test('uses custom namespace, if provided', 1, function (assert) {
+        window.tst_namespace = Handlebars.templates;
         delete Handlebars.templates;
         this.container.messages('add', this.data, {tplNamespace: 'tst_namespace'});
 
@@ -172,10 +172,24 @@
         delete window.tst_namespace;
     });
 
-    test('defaults to Handlebars namespace, if options.tplNamespace is missing', 1, function (assert) {
-        this.container.messages('add', this.data, {tplNamespace: null});
+    test('uses custom namespace, if provided in dot notation', 1, function (assert) {
+        window.tst_namespace = {templates: Handlebars.templates};
+        delete Handlebars.templates;
+        this.container.messages('add', this.data, {tplNamespace: 'tst_namespace.templates'});
 
         assert.htmlEqual(this.container.children('.message:last-child').get(0).outerHTML, this.hbsMsgHtml, 'new msg was appended to msgList');
+
+        delete window.tst_namespace;
+    });
+
+    test('uses custom template name, if provided', 1, function (assert) {
+        window.tst_namespace = { 'tst_msg.html': Handlebars.templates.message };
+        delete Handlebars.templates;
+        this.container.messages('add', this.data, {tplNamespace: 'tst_namespace', tplName: 'tst_msg.html'});
+
+        assert.htmlEqual(this.container.children('.message:last-child').get(0).outerHTML, this.hbsMsgHtml, 'new msg was appended to msgList');
+
+        delete window.tst_namespace;
     });
 
     test('appends to msgList arg, if provided', 1, function (assert) {
@@ -209,12 +223,6 @@
     test('does not call methods.bindHandlers if template does not exist', 1, function () {
         delete Handlebars.templates;
         this.container.messages('add');
-
-        ok(!this.methods.bindHandlers.called, 'bindHandlers was not called');
-    });
-
-    test('does not call methods.bindHandlers if templating option is neither "handlebars" nor "ich"', 1, function () {
-        this.container.messages('add', this.data, {templating: false});
 
         ok(!this.methods.bindHandlers.called, 'bindHandlers was not called');
     });
