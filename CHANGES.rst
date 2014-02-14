@@ -1,6 +1,13 @@
 CHANGES
 =======
 
+1.1.0 (2014.02.14)
+-------------------
+
+* Add option for template name.
+* Make agnostic regarding templating engine, as long as template is
+  precompiled and callable fn.
+
 1.0.3 (2013.10.29)
 -------------------
 
