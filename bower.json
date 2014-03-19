@@ -1,0 +1,29 @@
+{
+  "name": "jquery-django-messages-ui",
+  "version": "1.1.1",
+  "homepage": "https://github.com/jgerigmeyer/jquery-django-messages-ui",
+  "authors": [
+    "Jonny Gerig Meyer <jonny@oddbird.net>"
+  ],
+  "description": "JS client-side messages plugin, with support for Django contrib.messages app",
+  "main": "dist/django-messages-ui.js",
+  "keywords": [
+    "message",
+    "messages",
+    "Django"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "libs",
+    "Gruntfile.js",
+    "pydist",
+    "*.egg-info"
+  ],
+  "dependencies": {
+    "jquery": "*"
+  }
+}
