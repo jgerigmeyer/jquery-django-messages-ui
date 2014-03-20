@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+2.0.0 (2014.03.20)
+-------------------
+
+* BACKWARDS INCOMPATIBLE: Accept callable template fn instead of namespace and tplName.
+
 1.1.1 (2014.03.18)
 -------------------
 

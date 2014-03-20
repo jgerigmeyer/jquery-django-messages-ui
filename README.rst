@@ -60,13 +60,14 @@ If desired, also include the `precompiled JS template`_::
 
 .. _`precompiled JS template`: https://raw.github.com/jgerigmeyer/jquery-django-messages-ui/master/messages_ui/static/messages_ui/message.js
 
-To override the default JS template, link to your own precompiled JS file with
-a ``message`` template.
+To override the default JS template, pass your own precompiled template function
+as option ``template``.
 
 If using `ICanHaz.js`_, wrap the `ICanHaz.js template`_ (or your own custom
 template, if you don't want to use the default template) in a ``<script
 id="message" type="text/html">`` tag and include it in your HTML, or import it
-in JS using ``ich.addTemplate('message', YOUR_TEMPLATE_STRING)``.
+in JS using ``ich.addTemplate('message', YOUR_TEMPLATE_STRING)``. Then pass in
+the precompiled template: ``template: ich.message``.
 
 
 Installation with Django
@@ -87,21 +88,13 @@ If desired, also include the precompiled JS template::
 
   <script src="{% static 'messages_ui/message.js' %}"></script>
 
-Including the default HTML template::
-
-  {% include "messages_ui/_messages.html" %}
-
 If using `ICanHaz.js`_ to insert messages on the client side, use this template
-instead::
+instead, and pass in the precompiled template: ``template: ich.message``::
 
   {% include "messages_ui/_messages_ich.html" %}
 
-To override the default JS template, link to your own precompiled JS file with
-a ``message`` template.
-
-To override the default JS template using `ICanHaz.js`_ and `django-icanhaz`_,
-add a ``message.html`` file to a directory listed in your ``ICANHAZ_DIRS``
-setting.
+To override the default JS template, pass your own precompiled template function
+as option ``template``.
 
 
 Ajax
@@ -153,12 +146,8 @@ default values::
         el.fadeOut(2000, function () { el.remove(); });
       },
     handleAjax: false,            // Enable automatic AJAX handling
-    tplNamespace: 'Handlebars.templates',
-                                  // Global namespace where precompiled
-                                  // ...callable template is stored
-    tplName: 'message',           // Template name (must be precompiled
-                                  // ...and callable as a fn, accepting
-                                  // ...data as first argument)
+    template: Handlebars.templates.message,
+                                  // Callable precompiled template fn.
     escapeHTML: true              // Set ``false`` to display unescaped
                                   //  ...HTML in message content
   });

@@ -1,4 +1,4 @@
-/*! Django Messages UI - v1.1.1 - 2014-03-18
+/*! Django Messages UI - v2.0.0 - 2014-03-20
 * https://github.com/jgerigmeyer/jquery-django-messages-ui
 * Copyright (c) 2014 Jonny Gerig Meyer; Licensed MIT */
 (function ($) {
@@ -25,7 +25,7 @@
             e.preventDefault();
             $(this).blur();
             var thisMessage = $(this).closest(options.message);
-            methods['remove'](thisMessage, opts, messageList);
+            methods.remove(thisMessage, opts, messageList);
           }
         );
       }
@@ -43,7 +43,7 @@
               if (json && json.messages) {
                 var messages = $(json.messages);
                 messages.each(function () {
-                  methods['add'](this, opts, messageList);
+                  methods.add(this, opts, messageList);
                 });
               }
             }
@@ -68,20 +68,15 @@
         opts
       );
       var data = msg_data || {};
-      var namespaceArr = options.tplNamespace.split('.');
-      var namespace = window[namespaceArr[0]];
       var msg;
       data.escapeHTML = options.escapeHTML;
-      for (var i = 1; i < namespaceArr.length; i = i + 1) {
-        namespace = namespace[namespaceArr[i]];
+      if (options.template && typeof options.template === 'function') {
+        msg = $(options.template(data));
+      } else {
+        throw new Error('Template not found');
       }
-      if (namespace && namespace[options.tplName]) {
-        msg = $(namespace[options.tplName](data));
-      }
-      if (msg) {
-        msg.appendTo(msgList);
-        methods.bindHandlers(msg, options, msgList);
-      }
+      msg.appendTo(msgList);
+      methods.bindHandlers(msg, options, msgList);
       return msg;
     },
 
@@ -117,7 +112,8 @@
         };
         transientMessages.each(function () {
           var msg = $(this);
-          msg.data('count', ++count);
+          count = count + 1;
+          msg.data('count', count);
           $(document).one(
             'mousedown.msg-' + count +
               ' keydown.msg-' + count +
@@ -171,11 +167,8 @@
     },
     handleAjax: false,                    // Enable automatic handling of msgs
                                           // ...in "messages" key of xhr resp.
-    tplNamespace: 'Handlebars.templates', // Global namespace where precompiled
-                                          // ...callable template is stored
-    tplName: 'message',                   // Template name (must be precompiled
-                                          // ...and callable as a fn, accepting
-                                          // ...data as first argument)
+    template: Handlebars.templates.message,
+                                          // Callable precompiled template fn.
     escapeHTML: true                      // Set to ``false`` to not HTML-escape
                                           // ...message content (allowing for
                                           // ...in-line HTML in message)
