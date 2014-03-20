@@ -2,7 +2,7 @@
   "name": "django-messages-ui",
   "title": "Django Messages UI",
   "description": "JS client-side messages plugin, with support for Django contrib.messages app",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/jgerigmeyer/jquery-django-messages-ui",
   "author": {
     "name": "Jonny Gerig Meyer",

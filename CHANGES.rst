@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+2.0.1 (2014.03.20)
+-------------------
+
+* Delay instantiating Handlebars to prevent error if not using default.
+
 2.0.0 (2014.03.20)
 -------------------
 

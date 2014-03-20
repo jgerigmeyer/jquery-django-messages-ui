@@ -196,9 +196,13 @@
   });
 
   test('does not call methods.bindHandlers if template does not exist', function () {
+    var tpl = Handlebars.templates.message;
+    Handlebars.templates.message = false;
 
     throws(function () { this.container.messages('add', null, {template: null}); }, new Error('Template not found'), 'throws error if template not found');
     ok(!this.methods.bindHandlers.called, 'bindHandlers was not called');
+
+    Handlebars.templates.message = tpl;
   });
 
   test('uses old opts if stored on container', function () {

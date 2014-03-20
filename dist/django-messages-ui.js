@@ -1,4 +1,4 @@
-/*! Django Messages UI - v2.0.0 - 2014-03-20
+/*! Django Messages UI - v2.0.1 - 2014-03-20
 * https://github.com/jgerigmeyer/jquery-django-messages-ui
 * Copyright (c) 2014 Jonny Gerig Meyer; Licensed MIT */
 (function ($) {
@@ -68,10 +68,11 @@
         opts
       );
       var data = msg_data || {};
+      var tpl = options.template || Handlebars.templates.message;
       var msg;
       data.escapeHTML = options.escapeHTML;
-      if (options.template && typeof options.template === 'function') {
-        msg = $(options.template(data));
+      if (tpl && typeof tpl === 'function') {
+        msg = $(tpl(data));
       } else {
         throw new Error('Template not found');
       }
@@ -167,7 +168,7 @@
     },
     handleAjax: false,                    // Enable automatic handling of msgs
                                           // ...in "messages" key of xhr resp.
-    template: Handlebars.templates.message,
+    template: false,
                                           // Callable precompiled template fn.
     escapeHTML: true                      // Set to ``false`` to not HTML-escape
                                           // ...message content (allowing for
