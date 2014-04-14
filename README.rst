@@ -1,6 +1,11 @@
 jQuery Django Messages UI
 =========================
 
+.. image:: https://travis-ci.org/jgerigmeyer/jquery-django-messages-ui.svg?branch=master
+   :target: https://travis-ci.org/jgerigmeyer/jquery-django-messages-ui
+.. image:: https://cdn.gruntjs.com/builtwith.png
+   :target: http://gruntjs.com/
+
 JS client-side messages plugin, with support for Django contrib.messages app
 
 
