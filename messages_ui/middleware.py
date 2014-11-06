@@ -1,10 +1,7 @@
-try:
-    import json
-except ImportError:
-    from django.utils import simplejson as json
+import json
 
 from django.contrib import messages
-
+from django.utils.six import text_type
 
 
 class AjaxMessagesMiddleware(object):
@@ -50,7 +47,7 @@ class AjaxMessagesMiddleware(object):
             for message in messages.get_messages(request):
                 messagelist.append({
                     "level": message.level,
-                    "message": message.message,
+                    "message": text_type(message.message),
                     "tags": message.tags,
                 })
 
