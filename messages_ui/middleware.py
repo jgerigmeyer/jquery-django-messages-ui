@@ -31,7 +31,7 @@ class AjaxMessagesMiddleware(object):
             not getattr(response, 'no_messages', False)
             )
         if handle_response:
-            content_type = response['content-type'].split(";")[0]
+            content_type = response.get('content-type', 'None').split(";")[0]
 
             content = response.content.decode('utf-8')
 
