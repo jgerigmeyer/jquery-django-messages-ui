@@ -9,6 +9,7 @@ long_description = (
     open(join(here, "CHANGES.rst")).read()
     )
 
+
 def get_version():
     fh = open(join(here, "django-messages-ui.jquery.json"))
     try:
@@ -21,7 +22,10 @@ def get_version():
 setup(
     name="django-messages-ui",
     version=get_version(),
-    description="JS client-side messages plugin, with support for Django contrib.messages app",
+    description=(
+        "JS client-side messages plugin, with support for Django"
+        "contrib.messages app"
+    ),
     long_description=long_description,
     author="Jonny Gerig Meyer",
     author_email="jonny@oddbird.net",

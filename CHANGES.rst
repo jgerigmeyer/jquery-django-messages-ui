@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+2.0.2 (2015.03.01)
+-------------------
+
+* Merge pull request #5 from shinglyu/http204 (handle response with no content-type header)
+* Merge pull request #4 from support-lazy-messages (coerve message bodies to text)
+
 2.0.1 (2014.03.20)
 -------------------
 
