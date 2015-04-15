@@ -1,11 +1,30 @@
 {
-  "name": "jquery-plugin",
-  "version": "0.0.0-ignored",
+  "name": "jquery-django-messages-ui",
+  "version": "2.0.2",
+  "description": "JS client-side messages plugin, with support for Django contrib.messages app",
+  "keywords": [
+    "message",
+    "messages",
+    "django",
+    "jquery",
+    "jquery-plugin"
+  ],
+  "homepage": "https://github.com/jgerigmeyer/jquery-django-messages-ui",
+  "license": "MIT",
+  "author": "Jonny Gerig Meyer <jonny@oddbird.net>",
+  "main": "dist/django-messages-ui.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jgerigmeyer/jquery-django-messages-ui"
+  },
   "engines": {
     "node": ">= 0.8.0"
   },
   "scripts": {
     "test": "grunt qunit"
+  },
+  "bugs": {
+    "url": "https://github.com/jgerigmeyer/jquery-django-messages-ui/issues"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.10.0",
@@ -15,5 +34,8 @@
     "grunt-contrib-clean": "~0.5.0",
     "grunt": "~0.4.4",
     "grunt-qunit-istanbul": "~0.4.0"
+  },
+  "peerDependencies": {
+    "jquery": "*"
   }
 }
