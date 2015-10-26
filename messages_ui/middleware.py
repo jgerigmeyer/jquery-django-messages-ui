@@ -53,4 +53,5 @@ class AjaxMessagesMiddleware(object):
 
             response.content = json.dumps(data)
             response["content-type"] = "application/json"
+            response["content-length"] = len(response.content)
         return response
