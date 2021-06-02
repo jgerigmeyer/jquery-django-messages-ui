@@ -1,7 +1,6 @@
 import json
 
 from django.contrib import messages
-from django.utils.six import text_type
 
 
 class AjaxMessagesMiddleware(object):
@@ -24,7 +23,12 @@ class AjaxMessagesMiddleware(object):
     will not be read).
 
     """
-    def process_response(self, request, response):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+
         handle_response = (
             request.is_ajax() and
             response.status_code == 200 and
@@ -47,7 +51,7 @@ class AjaxMessagesMiddleware(object):
             for message in messages.get_messages(request):
                 messagelist.append({
                     "level": message.level,
-                    "message": text_type(message.message),
+                    "message": str(message.message),
                     "tags": message.tags,
                 })
 
